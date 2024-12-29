@@ -1,10 +1,16 @@
+<!DOCTYPE html>
 <html>
 <head>
     <title>Вход через Telegram</title>
 </head>
 <body>
-    <a href="https://t.me/Connect_and_auth_bot?start=UNIQUE_TOKEN">
-        <button>Войти через Telegram</button>
-    </a>
+    {% if user.is_authenticated %}
+        <h1>Добро пожаловать, {{ user.username }}!</h1>
+        <p>Вы успешно вошли в систему через Telegram.</p>
+    {% else %}
+        <a href="https://t.me/AuthConnectbot?start={{ unique_token }}">
+            <button>Войти через Telegram</button>
+        </a>
+    {% endif %}
 </body>
 </html>

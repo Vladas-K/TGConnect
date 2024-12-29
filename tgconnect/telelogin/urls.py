@@ -3,5 +3,5 @@ from . import views
 
 urlpatterns = [
     path('', views.home, name='home'),
-    path('telelegram-auth/', views.telegram_auth, name='telegram_auth'),  # Маршрут для обратного вызова
+    path('telegram-auth/', views.telegram_auth, name='telegram_auth'),
 ]
