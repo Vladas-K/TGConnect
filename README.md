@@ -1,5 +1,4 @@
 # TGConnect
-# Django Telegram Authentication Project
 
 Этот проект позволяет пользователям аутентифицироваться в веб-приложении Django через Telegram.
 
