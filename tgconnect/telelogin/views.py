@@ -1,14 +1,20 @@
+import os
 from django.conf import settings
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import login
 from django.contrib.auth.models import User
+from dotenv import load_dotenv
 from .models import TelegramUser
 from django.views.decorators.csrf import csrf_exempt
 import uuid
 import logging
 
 logger = logging.getLogger('telelogin')
+
+load_dotenv()
+
+bot_name = os.getenv('BOT_NAME')
 
 
 @csrf_exempt
@@ -33,6 +39,5 @@ def telegram_auth(request):
 
 def home(request):
     unique_token = str(uuid.uuid4())
-    bot_name = settings.BOT_NAME
     context = {'unique_token': unique_token, 'user': request.user, 'bot_name': bot_name}
     return render(request, 'telelogin/home.html', context)

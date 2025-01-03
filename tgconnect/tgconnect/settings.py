@@ -152,5 +152,3 @@ LOGGING = {
         },
     },
 }
-
-BOT_NAME = 'Your bot name'
