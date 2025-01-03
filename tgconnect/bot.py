@@ -6,6 +6,7 @@ from dotenv import load_dotenv
 from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
 import aiohttp
 
+
 load_dotenv()
 
 bot_token = os.getenv('TOKEN')
@@ -20,6 +21,7 @@ logging.basicConfig(
 )
 
 logger = logging.getLogger(__name__)
+
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     logger.info('Команда /start получена')
@@ -43,6 +45,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     else:
         await update.message.reply_text('Не удалось получить токен. Пожалуйста, повторите попытку.')
 
+
 def main():
     application = ApplicationBuilder().token(bot_token).build()
 
@@ -51,6 +54,7 @@ def main():
 
     logger.info("Бот запущен и ожидает команды.")
     application.run_polling()
+
 
 if __name__ == '__main__':
     loop = asyncio.new_event_loop()

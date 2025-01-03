@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import login
@@ -9,14 +10,13 @@ import logging
 
 logger = logging.getLogger('telelogin')
 
+
 @csrf_exempt
 def telegram_auth(request):
     if request.method == 'POST':
         token = request.POST.get('token')
         telegram_id = request.POST.get('telegram_id')
         telegram_username = request.POST.get('telegram_username')
-
-        logger.info(f'Получен запрос: token={token}, telegram_id={telegram_id}, telegram_username={telegram_username}')
 
         if token and telegram_id and telegram_username:
             user, created = User.objects.get_or_create(username=telegram_username)
@@ -25,14 +25,14 @@ def telegram_auth(request):
                 defaults={'telegram_id': telegram_id, 'telegram_username': telegram_username}
             )
             login(request, user)
-            logger.info(f'Пользователь {telegram_username} авторизован успешно')
             return redirect('home')
     
     logger.warning('Ошибка авторизации: недостаточно данных')
     return redirect('home')
 
+
 def home(request):
     unique_token = str(uuid.uuid4())
-    logger.info(f'Создан уникальный токен: {unique_token}')
-    context = {'unique_token': unique_token, 'user': request.user}
+    bot_name = settings.BOT_NAME
+    context = {'unique_token': unique_token, 'user': request.user, 'bot_name': bot_name}
     return render(request, 'telelogin/home.html', context)
